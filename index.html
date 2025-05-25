@@ -1,48 +1,52 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Introduction to the Team</title>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <title>Our kebabs are very delicious</title>
     <link rel="stylesheet" href="css/styles.css">
+    <script src="js/script.js" defer></script>
 </head>
 <body>
-    <nav class="nav-container">
-        <h1>Introduction to the team</h1>
+    <nav class="nav-container" id="sidebar">
+        <button class="toggle-button" onclick="toggleNav()">☰</button>
+        <h1>A kebab place</h1>
         <div class="button-group">
-            <button onclick="window.location.href='services.html'">Services</button>
-            <button onclick="window.location.href='about.html'">About</button>
-            <button onclick="window.location.href='contact.html'">Contact</button>
+            <button onclick="location.href='services.html'">Services</button>
+            <button onclick="location.href='about.html'">About</button>
+            <button onclick="location.href='contact.html'">Contact</button>
         </div>
     </nav>
 
-    <section class="hero">
-        <h2>Welcome to our team page</h2>
-        <p>Discover our interesting way of designing websites.</p>
-    </section>
+    <div class="content">
+        <section class="hero">
+            <h2>Kebab Place</h2>
+            <p>Check out our options <i class="fa fa-optin-monster" aria-hidden="true"></i></p>
+        </section>
 
-    <section class="features">
-        <div class="feature">
-            <h3>Our Team</h3>
-            <p>Learn more about the passionate people behind the scenes.</p>
-        </div>
-        <div class="feature">
-            <h3>User-Friendly Layout</h3>
-            <p>Designed with your experience in mind for easy navigation.</p>
-        </div>
-        <div class="feature">
-            <h3>Thank You!</h3>
-            <p>We hope you enjoy your experience with us!</p>
-        </div>
-    </section>
+        <section class="features">
+            <div class="feature">
+                <h3>Order from home</h3>
+                <p>You have the option to order from the comfort of your home anytime</p>
+            </div>
+            <div class="feature">
+                <h3>Special discounts</h3>
+                <p>Every week we offer special discounts!</p>
+            </div>
+            <div class="feature">
+                <h3>Open from 10AM - 8PM</h3>
+                <p>Keep that in mind</p>
+            </div>
+        </section>
 
-    <footer class="footer">
-        <button onclick="window.location.href='video.html';">Watch Our Video</button>
-        <p>&copy; 2025 Group 5 website. Follow us on 
-            <a href="https://www.facebook.com/">Facebook</a> 
-            <a href="https://www.instagram.com/">Instagram</a>
-            <a href="https://x.com/?lang=en">X</a>
-        </p>
-    </footer>
+        <footer class="footer">
+            <button onclick="location.href='video.html';">Watch Our Video</button>
+            <p>© An ordinary kebab place, follow us on
+                <a href="https://www.facebook.com/">Facebook</a> 
+                <a href="https://www.instagram.com/">Instagram</a>
+                <a href="https://x.com/?lang=en">X</a>
+            </p>
+        </footer>
+    </div>
 </body>
 </html>
