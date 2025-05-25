@@ -26,8 +26,15 @@ To create an intuitive and accessible application for kebab businesses and their
 - 🔍 Organized structure for future scalability
 
 ---
+## ⚙️ 1.1.4 Pages 
+- LoginPage(Registration)
+- Home Page
+- Menu Page
+- CheckOut Page
+- Contact Page/About Page(Adress, Contact Information, About Kebab Place information)
 
-## 👥 1.1.4 Roles and Responsibilities
+
+## 👥 1.1.5 Roles and Responsibilities
 
 To be continued...
 
