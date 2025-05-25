@@ -3,60 +3,60 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>About Us</title>
+    <title>Services</title>
     <link rel="stylesheet" href="css/styles.css">
     <script src="js/script.js" defer></script>
     <script>
         fetch('navbar.html')
             .then(response => response.text())
             .then(data => {
-            document.getElementById('side-navbar').innerHTML = data;
-            const currentPage = window.location.pathname.split('/').pop();
-            document.querySelectorAll('.nav-btn').forEach(button => {
-                if (button.getAttribute('onclick')?.includes(currentPage)) {
-                button.classList.add('hidden-button');
-                }
-            });
+                document.getElementById('side-navbar').innerHTML = data;
+                const currentPage = window.location.pathname.split('/').pop();
+                document.querySelectorAll('.nav-btn').forEach(button => {
+                    if (button.getAttribute('onclick')?.includes(currentPage)) {
+                        button.classList.add('hidden-button');
+                    }
+                });
             });
     </script>
 </head>
-<body>
+<body class="services-body">
     <div id="side-navbar"></div>
-    <section id="team">
-        <h1>Meet Our Team</h1>
-        <div class="team-container">
-            <div class="team-member">
-                <img src="images/member1.jpg" alt="Member 1" width="200">
-                <h2>Linda Brante</h2>
-                <p>Leader</p>
-                <button onclick="window.location.href='member1.html'">More Info</button>
+    <div class="container-services">
+        <div class="services-grid">
+            <div class="service-column">
+                <h1>Our Services</h1>
+                <ul class="service-list">
+                    <li>Tasty kebab plates</li>
+                    <li>Healthy fries</li>
+                    <li>Digital Marketing</li>
+                    <li>Content Creation</li>
+                    <li>Online Ordering</li>
+                    <li>Catering Services</li>
+                </ul>
+                <img src="images/lamb-wrap.jpg" alt="Lamb Wrap">
             </div>
-    
-            <div class="team-member">
-                <img src="images/member2.jpg" alt="Member 2" width="200">
-                <h2>Rafaels Dmitrijevs</h2>
-                <p>Member</p>
-                <button onclick="window.location.href='member2.html'">More Info</button>
+            <div class="service-column">
+                <h2>Menu Highlights</h2>
+                <ul class="service-list">
+                    <li>Spicy Chicken Kebab</li>
+                    <li>Lamb Wrap with Salad</li>
+                    <li>Vegetarian Falafel Plate</li>
+                    <li>Grilled Halloumi Skewers</li>
+                </ul>
+                <img src="images/lamb-wrap.jpg" alt="Menu Highlight">
             </div>
-    
-            <div class="team-member">
-                <img src="images/member3.jpg" alt="Member 3" width="200">
-                <h2>Ralfs Fridvalds</h2>
-                <p>Member</p>
-                <button onclick="window.location.href='member3.html'">More Info</button>
+            <div class="service-column">
+                <h2>Special Offers</h2>
+                <ul class="service-list">
+                    <li>Buy One, Get One Half Off (Mondays)</li>
+                    <li>Family Combo - 15% Off</li>
+                    <li>Free Drink with Kebab Plate</li>
+                    <li>Loyalty Card: 10th Meal Free</li>
+                </ul>
+                <img src="images/lamb-wrap.jpg" alt="Special Offer">
             </div>
         </div>
-    </section>
-    <section id="history">
-        <h1>Our History</h1>
-        <ul>
-            <li><strong>1.March:</strong>Made project structure and main pages such as: about,contact,index,services </li>
-            <li><strong>2.March:</strong>Finished styling the project using the css file, added more html files and finished up the project</li>
-            <li><strong>3.March:</strong>Wrote the documentation about the project</li>
-        </ul>
-    </section>
-    
-    
-    
+    </div>
 </body>
 </html>
