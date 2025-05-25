@@ -5,6 +5,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Services</title>
     <link rel="stylesheet" href="css/styles.css">
+    <script src="js/script.js" defer></script>
+
     <style>
         
         body {
@@ -31,7 +33,18 @@
     </style>
 </head>
 <body>
-    <button class="back-button" onclick="window.location.href='index.html'">Back</button>
+    <nav class="nav-container" id="sidebar">
+            <div onclick="toggleNav()">
+            <button class="toggle-button">☰</button>
+        </div>
+        <h1>A kebab place</h1>
+        <div class="button-group">
+            <button onclick="location.href='services.html'">Services</button>
+            <button onclick="location.href='about.html'">About</button>
+            <button onclick="location.href='contact.html'">Contact</button>
+        </div>
+        
+    </nav>
     
     <div class="container">
         <h1>Our Services</h1>
