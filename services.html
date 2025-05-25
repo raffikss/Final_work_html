@@ -6,57 +6,32 @@
     <title>Services</title>
     <link rel="stylesheet" href="css/styles.css">
     <script src="js/script.js" defer></script>
-
-    <style>
-        
-        body {
-            font-family: Arial, sans-serif;
-            text-align: center;
-            margin: 50px;
-            background-color:darkgrey;
-
-        }
-        .container {
-            max-width: 600px;
-            margin: auto;
-        }
-        .service-list {
-            list-style: none;
-            padding: 0;
-        }
-        .service-list li {
-            background: #c1baba;
-            margin: 10px 0;
-            padding: 10px;
-            border-radius: 5px;
-        }
-    </style>
+    <script>
+        fetch('navbar.html')
+            .then(response => response.text())
+            .then(data => {
+            document.getElementById('side-navbar').innerHTML = data;
+            const currentPage = window.location.pathname.split('/').pop();
+            document.querySelectorAll('.nav-btn').forEach(button => {
+                if (button.getAttribute('onclick')?.includes(currentPage)) {
+                button.classList.add('hidden-button');
+                }
+            });
+            });
+    </script>
 </head>
 <body>
-    <nav class="nav-container" id="sidebar">
-            <div onclick="toggleNav()">
-            <button class="toggle-button">☰</button>
-        </div>
-        <h1>A kebab place</h1>
-        <div class="button-group">
-            <button onclick="location.href='index.html'">Home</button>
-            <button onclick="location.href='services.html'" class="hidden-button">Services</button>
-            <button onclick="location.href='about.html'">About</button>
-            <button onclick="location.href='contact.html'">Contact</button>
-        </div>
-        
-    </nav>
-    
-    <div class="container">
+    <div id="side-navbar"></div>
+    <div class="container-services">
         <h1>Our Services</h1>
         <ul class="service-list">
-            <li>Web Development</li>
-            <li>Graphic Design</li>
-            <li>SEO Optimization</li>
+            <li>Tasty kebab plates</li>
+            <li>Healthy fries</li>
+            <li></li>
             <li>Digital Marketing</li>
             <li>Content Creation</li>
         </ul>
-        <img src="images/images.jpg">
+        <img src="images/lamb-wrap.jpg">
 
     </div>
 </body>
