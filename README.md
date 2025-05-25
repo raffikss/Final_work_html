@@ -1,32 +1,36 @@
-# Final_work_html
+# 🥙 Final_work_html
 
-<<<<<<< HEAD
+An interactive and user-friendly web application for kebab stores.
 
-# 1.1.1. The purpose and objectives of the website.  
-Is to create a interactive and user friendly application of kebab store
+---
 
-# 1.1.2. Target audience. 
-Clients, which require a easy to navigate app for their favorite kebab place or kebab place owners, which are in need of an app to widen their business
+## 📌 1.1.1 Purpose and Objectives
 
-# 1.1.3. Features and functionalities. 
-=======
-# Final_work_html
-1.1.1. The purpose and objectives of the website.  
-Is to create a interactive and user friendly application of kebab store
-1.1.2. Target audience. 
-Clients, which require a easy to navigate app for their favorite kebab place or kebab place owners, which are in need of an app to widen their business
-1.1.3. Features and functionalities. 
->>>>>>> a63d904d3340e8ec01db985774978870e0543d14
-We will be adding various features:
-Easy to navigate front end 
-Backend which lets user easily interact with the application
-CRUD operations for admins
-Lists of products from database displayed for the users
-<<<<<<< HEAD
+To create an intuitive and accessible application for kebab businesses and their customers.
 
+---
 
-# 1.1.4. Roles and responsibilities of each team member. 
-=======
-1.1.4. Roles and responsibilities of each team member. 
->>>>>>> a63d904d3340e8ec01db985774978870e0543d14
+## 🎯 1.1.2 Target Audience
+
+- Customers looking for an easy-to-use app to find their favorite kebab places.
+- Kebab shop owners who want a digital platform to grow their business.
+
+---
+
+## ⚙️ 1.1.3 Features and Functionalities
+
+- ✨ Easy-to-navigate front end
+- 🧩 Backend with user-friendly interactions
+- 🛠️ CRUD operations for administrators
+- 📦 Display of products from the database
+- 🔍 Organized structure for future scalability
+
+---
+
+## 👥 1.1.4 Roles and Responsibilities
+
 To be continued...
+
+---
+
+> _This project is part of our final coursework submission._
