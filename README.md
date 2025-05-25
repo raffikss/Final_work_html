@@ -14,5 +14,6 @@ Backend which lets user easily interact with the application
 CRUD operations for admins
 Lists of products from database displayed for the users
 
+
 # 1.1.4. Roles and responsibilities of each team member. 
 To be continued...
