@@ -381,3 +381,14 @@ body {
     color: #333;
     font-weight: bold;
 }
+
+
+.hidden-button {
+    background-color: rgb(37, 36, 36);
+    color: #292727;           
+    opacity: 0.2;           
+    cursor: pointer;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 5px;
+}
