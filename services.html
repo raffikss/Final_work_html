@@ -6,11 +6,17 @@
     <title>Services</title>
     <link rel="stylesheet" href="css/styles.css">
     <script src="js/script.js" defer></script>
-        <script>
+    <script>
         fetch('navbar.html')
             .then(response => response.text())
             .then(data => {
             document.getElementById('side-navbar').innerHTML = data;
+            const currentPage = window.location.pathname.split('/').pop();
+            document.querySelectorAll('.nav-btn').forEach(button => {
+                if (button.getAttribute('onclick')?.includes(currentPage)) {
+                button.classList.add('hidden-button');
+                }
+            });
             });
     </script>
 </head>
@@ -25,7 +31,7 @@
             <li>Digital Marketing</li>
             <li>Content Creation</li>
         </ul>
-        <img src="images/images.jpg">
+        <img src="images/lamb-wrap.jpg">
 
     </div>
 </body>
