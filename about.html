@@ -6,23 +6,16 @@
     <title>About Us</title>
     <link rel="stylesheet" href="css/styles.css">
     <script src="js/script.js" defer></script>
+            <script>
+        fetch('navbar.html')
+            .then(response => response.text())
+            .then(data => {
+            document.getElementById('side-navbar').innerHTML = data;
+            });
+    </script>
 </head>
 <body>
-    <nav class="nav-container" id="sidebar">
-            <div onclick="toggleNav()">
-            <button class="toggle-button">☰</button>
-        </div>
-        <h1>A kebab place</h1>
-        <div class="button-group">
-            <button onclick="location.href='index.html'" >Home</button>
-            <button onclick="location.href='services.html'">Services</button>
-            <button onclick="location.href='about.html'" class="hidden-button">About</button>
-            <button onclick="location.href='contact.html'">Contact</button>
-            <button onclick="location.href='menu.html'">Menu</button>
-        </div>
-        
-    </nav>
-
+    <div id="side-navbar"></div>
     <section id="team">
         <h1>Meet Our Team</h1>
         <div class="team-container">

@@ -34,25 +34,16 @@
             font-size: 12px;
         }
     </style>
+        <script>
+        fetch('navbar.html')
+            .then(response => response.text())
+            .then(data => {
+            document.getElementById('side-navbar').innerHTML = data;
+            });
+    </script>
 </head>
 <body>
-    <nav class="nav-container" id="sidebar">
-            <div onclick="toggleNav()">
-            <button class="toggle-button">☰</button>
-        </div>
-        <h1>A kebab place</h1>
-        <div class="button-group">
-            <button onclick="location.href='index.html'">Home</button>
-            <button onclick="location.href='services.html'">Services</button>
-            <button onclick="location.href='about.html'">About</button>
-            <button onclick="location.href='contact.html'" class="hidden-button">Contact</button>
-            <button onclick="location.href='menu.html'">Menu</button>
-        </div>
-        
-    </nav>
-
-
-
+    <div id="side-navbar"></div>
     <h2 class="about-R">Contact Us</h2>
 
     <div class="form-container">
