@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8" />
+    <title>title</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="css/styles.css">
+    <style>
+        body {
+            text-align: center;
+        }
+
+        .container-R {
+            text-align: center;
+            width: 100%;
+        }
+
+        .form-container {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            margin-top: 20px;
+        }
+
+        input, textarea, .button_submit {
+            display: block;  
+            margin-bottom: 10px; 
+            width: 100%; 
+            max-width: 300px; 
+            padding: 10px;
+            padding-right: 30px;
+            padding-left: 30px;
+            font-size: 12px;
+        }
+    </style>
+</head>
+<body>
+    <button 
+        onclick="window.location.href='index.html'"
+        class="back-button">
+        Back
+    </button>
+    <br>
+
+    <h2 class="about-R">Contact Us</h2>
+
+    <div class="form-container">
+        <form>
+            <input type="text" name="name" placeholder="name" required>
+            <input type="email" name="email" placeholder="email" required>
+            <textarea name="message" placeholder="Enter your message" rows="5" required></textarea>
+            <button class="button_submit" type="submit">Submit</button>
+        </form>
+
+
+        <div class="hobbies-R">
+            <h3>Our contact information</h3>
+            <p><strong>Email:</strong> rafaels.dmitrijevs@VA.LV</p>
+            <p><strong>Phone:</strong> +371 29 123 832</p>
+            <p><strong>Address:</strong> Somewhere, Valmiera, Latvia</p>
+        </div>
+    </div>
+</body>
+</html>
