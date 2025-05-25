@@ -10,29 +10,53 @@
         fetch('navbar.html')
             .then(response => response.text())
             .then(data => {
-            document.getElementById('side-navbar').innerHTML = data;
-            const currentPage = window.location.pathname.split('/').pop();
-            document.querySelectorAll('.nav-btn').forEach(button => {
-                if (button.getAttribute('onclick')?.includes(currentPage)) {
-                button.classList.add('hidden-button');
-                }
-            });
+                document.getElementById('side-navbar').innerHTML = data;
+                const currentPage = window.location.pathname.split('/').pop();
+                document.querySelectorAll('.nav-btn').forEach(button => {
+                    if (button.getAttribute('onclick')?.includes(currentPage)) {
+                        button.classList.add('hidden-button');
+                    }
+                });
             });
     </script>
 </head>
-<body>
+<body class="side-navbar-services">
     <div id="side-navbar"></div>
     <div class="container-services">
-        <h1>Our Services</h1>
-        <ul class="service-list">
-            <li>Tasty kebab plates</li>
-            <li>Healthy fries</li>
-            <li></li>
-            <li>Digital Marketing</li>
-            <li>Content Creation</li>
-        </ul>
-        <img src="images/lamb-wrap.jpg">
-
+        <div class="services-grid">
+            <div class="service-column">
+                <h1>Our Services</h1>
+                <ul class="service-list">
+                    <li>Tasty kebab plates</li>
+                    <li>Healthy fries</li>
+                    <li>Digital Marketing</li>
+                    <li>Content Creation</li>
+                    <li>Online Ordering</li>
+                    <li>Catering Services</li>
+                </ul>
+                <img src="images/lamb-wrap.jpg" alt="Lamb Wrap">
+            </div>
+            <div class="service-column">
+                <h2>Menu Highlights</h2>
+                <ul class="service-list">
+                    <li>Spicy Chicken Kebab</li>
+                    <li>Lamb Wrap with Salad</li>
+                    <li>Vegetarian Falafel Plate</li>
+                    <li>Grilled Halloumi Skewers</li>
+                </ul>
+                <img src="images/lamb-wrap.jpg" alt="Menu Highlight">
+            </div>
+            <div class="service-column">
+                <h2>Special Offers</h2>
+                <ul class="service-list">
+                    <li>Buy One, Get One Half Off (Mondays)</li>
+                    <li>Family Combo - 15% Off</li>
+                    <li>Free Drink with Kebab Plate</li>
+                    <li>Loyalty Card: 10th Meal Free</li>
+                </ul>
+                <img src="images/lamb-wrap.jpg" alt="Special Offer">
+            </div>
+        </div>
     </div>
 </body>
 </html>
