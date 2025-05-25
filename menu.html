@@ -13,7 +13,6 @@
             width: 50%;
             padding: 0.5rem;
             border: 2px solid #dc3545;
-            /* Bootstrap "danger" color */
             border-radius: 0.25rem;
             transition: background-color 0.3s ease;
             cursor: pointer;
@@ -21,7 +20,15 @@
 
         .price-box:hover {
             background-color: rgba(220, 53, 69, 0.1);
-            /* subtle red background on hover */
+        }
+        
+        .card-img-top {
+            width: 200px;
+            height: 200px;
+            object-fit: cover;
+            display: block;
+            margin-left: auto;
+            margin-right: auto;
         }
     </style>
 </head>
@@ -63,86 +70,93 @@
     </footer>
 
     <script>
-        const Wraps = [
-            {
-                id: "chicken-wrap",
-                name: "Chicken Kebab Wrap",
-                description: "Strips of delicious cooked chicken wrapped in a lightly toasted tortilla wrap with lettuce, mayo and salsa.",
-                price: "6.50"
-            },
+        const menuItems = [
+            wraps = [
+                {
+                    id: "chicken-wrap",
+                    name: "Chicken Kebab Wrap",
+                    description: "Strips of delicious cooked chicken wrapped in a lightly toasted tortilla wrap with lettuce, mayo and salsa.",
+                    price: "6.50"
+                },
 
-            {
-                id: "lamb-wrap",
-                name: "Lamb Kebab Wrap",
-                description: " The grilled lamb is then wrapped in a soft, warm pita bread and garnished with various vegetables and condiments, such as lettuce, tomatoes, onions, and a flavorful yogurt sauce.",
-                price: "7.00"
-            },
+                {
+                    id: "lamb-wrap",
+                    name: "Lamb Kebab Wrap",
+                    description: " The grilled lamb is then wrapped in a soft, warm pita bread and garnished with various vegetables and condiments, such as lettuce, tomatoes, onions, and a flavorful yogurt sauce.",
+                    price: "7.00"
+                },
 
-            {
-                id: "falafel-wrap",
-                name: "Falafel Wrap",
-                description: " Crispy chickpea patties wrapped in warm pita with fresh veggies and our signature sauce. A delicious vegetarian favorite!",
-                price: "6.00"
-            },
-        ];
-            const Plates = [
-            {
-                id: "chicken-plate",
-                name: "Chicken Plate",
-                description: " Tender grilled chicken served with, fresh salad, and our special sauce.",
-                price: "9.00"
-            }, 
+                {
+                    id: "falafel-wrap",
+                    name: "Falafel Wrap",
+                    description: " Crispy chickpea patties wrapped in warm pita with fresh veggies and our signature sauce. A delicious vegetarian favorite!",
+                    price: "6.00"
+                },
+            ],
+            plates = [
+                {
+                    id: "chicken-plate",
+                    name: "Chicken Plate",
+                    description: " Tender grilled chicken served with, fresh salad, and our special sauce.",
+                    price: "9.00"
+                }, 
 
-            {
-                id: "mix-grill",
-                name: "Mix Grill Plate",
-                description: " A hearty combo of grilled chicken, beef, and lamb served with your choice of three delicious sauces. A flavorful feast for meat lovers!",
-                price: "12.00"
-            },
+                {
+                    id: "mix-grill",
+                    name: "Mix Grill Plate",
+                    description: " A hearty combo of grilled chicken, beef, and lamb served with your choice of three delicious sauces. A flavorful feast for meat lovers!",
+                    price: "12.00"
+                },
 
-            {
-                id: "veggie-plate",
-                name: "Veggie Plate",
-                description: "  A colorful mix of grilled seasonal vegetables served with your choice of sauce.",
-                price: "10.00"
-            },   
-        ];
-            const Drinks = [
-            {
-                id: "soda",
-                name: "Soda",
-                description: " Cola / Fanta / Sprite",
-                price: "1.50"
-            }, 
+                {
+                    id: "veggie-plate",
+                    name: "Veggie Plate",
+                    description: "  A colorful mix of grilled seasonal vegetables served with your choice of sauce.",
+                    price: "10.00"
+                },   
+            ],
+            drinks = [
+                {
+                    id: "soda",
+                    name: "Soda 0.5 L",
+                    description: " Cola / Fanta / Sprite",
+                    price: "1.50"
+                }, 
 
-            {
-                id: "water",
-                name: "Water",
-                description: "Mineral Water",
-                price: "1.00"
-            }, 
+                {
+                    id: "water",
+                    name: "Water",
+                    description: "Mineral Water",
+                    price: "1.00"
+                }, 
+            ]
         ];
         const container = document.getElementById("menu-container");
 
-        menuItems.forEach(item => {
-            const card = `
-        <div class="col-md-4">
-          <div class="card h-100">
-            <img src="images/${item.id}.jpg" class="card-img-top" alt="${item.name}">
-            <div class="card-body">
-              <h5 class="card-title">${item.name}</h5>
-              <p class="card-text">${item.description}</p>
-              <p
-                onclick="addToCart('${item.id}')"
-                class="fw-bold text-center text-danger price-box">
-                ${item.price} € <i class="fa fa-shopping-cart text-black"></i>
-              </p>
+        menuItems.forEach(category => {
+            category.forEach(item => {
+                const card = `
+                    <div class="col-md-4">
+                        <div class="card h-100">
+                            <img
+                                src="images/${item.id}.jpg"
+                                class="card-img-top"
+                                alt="${item.name}"
+                            />
+                            <div class="card-body">
+                            <h5 class="card-title">${item.name}</h5>
+                            <p class="card-text">${item.description}</p>
+                            <p
+                                onclick="addToCart('${item.id}')"
+                                class="fw-bold text-center text-danger price-box">
+                                ${item.price} € <i class="fa fa-shopping-cart text-black"></i>
+                            </p>
 
-            </div>
-          </div>
-        </div>
-      `;
-            container.insertAdjacentHTML("beforeend", card);
+                            </div>
+                        </div>
+                    </div>`;
+                container.insertAdjacentHTML("beforeend", card);
+            });
         });
 
 
