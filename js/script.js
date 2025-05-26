@@ -401,15 +401,14 @@ function loadOrderHistory() {
             return;
         }
         
-        // Determine which action to use based on user role
-        const action = sessionData.user.role === 'staff' ? 'get_all_orders' : 'get_user_orders';
-        
+        // Always use get_user_orders for regular order history modal
+        // Staff will use the dedicated staff page for managing all orders
         return fetch('orders.php', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/x-www-form-urlencoded',
             },
-            body: `action=${action}`
+            body: 'action=get_user_orders'
         });
     })
     .then(response => response.json())
@@ -447,17 +446,13 @@ function displayOrderHistory(orders) {
         
         const statusClass = getStatusClass(order.status);
         
-        // Show customer info for staff, hide for regular customers
-        const customerInfo = order.customer_name ? 
-            `<div class="order-customer">Customer: ${order.customer_name} | Phone: ${order.guest_phone}</div>` : '';
-        
+        // Don't show customer info in regular order history (only for user's own orders)
         ordersHTML += `
             <div class="order-card">
                 <div class="order-header">
                     <span class="order-id">Order #${order.id}</span>
                     <span class="order-status ${statusClass}">${order.status.toUpperCase()}</span>
                 </div>
-                ${customerInfo}
                 <div class="order-date">${date} at ${time}</div>
                 <div class="order-items">${itemsHTML}</div>
                 <div class="order-total">Total: €${parseFloat(order.total_amount).toFixed(2)}</div>
@@ -519,15 +514,26 @@ function updateUIForLoggedInUser(user) {
     if (loggedOutButtons) loggedOutButtons.style.display = 'none';
     if (loggedInButtons) loggedInButtons.style.display = 'block';
 
-    if (user.role === 'admin' && adminSection) {
-        adminSection.style.display = 'block';
+    // Only show admin section for admin users
+    if (adminSection) {
+        if (user.role === 'admin') {
+            adminSection.style.display = 'block';
+        } else {
+            adminSection.style.display = 'none';
+        }
     }
 
-    if ((user.role === 'staff' || user.role === 'admin') && staffSection) {
-        staffSection.style.display = 'block';
+    // Only show staff section for staff and admin users
+    if (staffSection) {
+        if (user.role === 'staff' || user.role === 'admin') {
+            staffSection.style.display = 'block';
+        } else {
+            staffSection.style.display = 'none';
+        }
     }
 
-    if (orderHistoryBtn && (user.role === 'customer' || user.role === 'staff')) {
+    // Show order history for all logged-in users
+    if (orderHistoryBtn) {
         orderHistoryBtn.style.display = 'inline-block';
     }
 }
@@ -547,6 +553,7 @@ function updateUIForLoggedOutUser() {
     if (staffSection) staffSection.style.display = 'none';
     if (orderHistoryBtn) orderHistoryBtn.style.display = 'none';
 }
+
 function showLoginModal() {
     const modal = document.getElementById('loginModal');
     if (modal) {
