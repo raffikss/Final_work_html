@@ -282,14 +282,6 @@ button:hover {
 
 /* Services */
 
-.services-body {
-    font-family: Arial, sans-serif;
-    line-height: 1.6;
-    color: #333;
-    background-color: #f4f4f4;
-    display: flex;
-}
-
 .container-services {
     margin-left: 270px;
     padding: 40px;
