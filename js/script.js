@@ -1,4 +1,3 @@
-
 let cart = [];
 
 function toggleNav() {
@@ -221,7 +220,242 @@ function showCartNotification(message) {
     }, 2000);
 }
 
-// Authentication Functions (existing code)
+// Checkout Functions
+function proceedToCheckout() {
+    if (cart.length === 0) {
+        alert('Your cart is empty!');
+        return;
+    }
+    
+    closeModal('cartModal');
+    showCheckoutModal();
+}
+
+function showCheckoutModal() {
+    const modal = document.getElementById('checkoutModal');
+    if (modal) {
+        updateCheckoutSummary();
+        modal.style.display = 'block';
+        setupCheckoutForm();
+    }
+}
+
+function updateCheckoutSummary() {
+    const checkoutItems = document.getElementById('checkout-items');
+    const checkoutTotal = document.getElementById('checkout-total');
+    
+    if (!checkoutItems) return;
+    
+    let itemsHTML = '';
+    let total = 0;
+    
+    cart.forEach(item => {
+        const itemTotal = item.price * item.quantity;
+        total += itemTotal;
+        
+        itemsHTML += `
+            <div class="checkout-item">
+                <div class="checkout-item-info">
+                    <span class="item-name">${item.name}</span>
+                    <span class="item-quantity">x${item.quantity}</span>
+                </div>
+                <span class="item-total">€${itemTotal.toFixed(2)}</span>
+            </div>
+        `;
+    });
+    
+    checkoutItems.innerHTML = itemsHTML;
+    if (checkoutTotal) checkoutTotal.textContent = total.toFixed(2);
+}
+
+function setupCheckoutForm() {
+    const checkoutForm = document.getElementById('checkoutForm');
+    const cardNumberInput = document.getElementById('card-number');
+    const cardExpiryInput = document.getElementById('card-expiry');
+    
+    if (cardNumberInput) {
+        cardNumberInput.addEventListener('input', function(e) {
+            let value = e.target.value.replace(/\s/g, '').replace(/[^0-9]/gi, '');
+            let formattedValue = value.match(/.{1,4}/g)?.join(' ');
+            if (formattedValue) {
+                e.target.value = formattedValue;
+            }
+        });
+    }
+    
+    if (cardExpiryInput) {
+        cardExpiryInput.addEventListener('input', function(e) {
+            let value = e.target.value.replace(/\D/g, '');
+            if (value.length >= 2) {
+                value = value.substring(0, 2) + '/' + value.substring(2, 4);
+            }
+            e.target.value = value;
+        });
+    }
+    
+    if (checkoutForm) {
+        checkoutForm.onsubmit = function(e) {
+            e.preventDefault();
+            handleCheckoutSubmit();
+        };
+    }
+}
+
+function handleCheckoutSubmit() {
+    const name = document.getElementById('checkout-name').value.trim();
+    const phone = document.getElementById('checkout-phone').value.trim();
+    const paymentMethod = document.getElementById('payment-method').value;
+    const cardNumber = document.getElementById('card-number').value.replace(/\s/g, '');
+    const cardExpiry = document.getElementById('card-expiry').value;
+    const cardCVV = document.getElementById('card-cvv').value;
+    
+    // Validation
+    if (!name || !phone || !paymentMethod || !cardNumber || !cardExpiry || !cardCVV) {
+        alert('Please fill in all fields');
+        return;
+    }
+    
+    if (cardNumber.length !== 16) {
+        alert('Please enter a valid 16-digit card number');
+        return;
+    }
+    
+    if (!/^\d{2}\/\d{2}$/.test(cardExpiry)) {
+        alert('Please enter expiry date in MM/YY format');
+        return;
+    }
+    
+    if (cardCVV.length !== 3) {
+        alert('Please enter a valid 3-digit CVV');
+        return;
+    }
+    
+    // Calculate total
+    const total = cart.reduce((sum, item) => sum + (item.price * item.quantity), 0);
+    
+    // Prepare order data
+    const orderData = {
+        action: 'place_order',
+        items: JSON.stringify(cart),
+        total: total,
+        phone: phone,
+        name: name,
+        payment_method: paymentMethod,
+        card_number: cardNumber
+    };
+    
+    // Submit order
+    const formData = new FormData();
+    Object.keys(orderData).forEach(key => {
+        formData.append(key, orderData[key]);
+    });
+    
+    fetch('order_handler.php', {
+        method: 'POST',
+        body: formData
+    })
+    .then(response => response.json())
+    .then(data => {
+        if (data.success) {
+            alert('Order placed successfully! Order ID: ' + data.order_id);
+            clearCart();
+            closeModal('checkoutModal');
+            document.getElementById('checkoutForm').reset();
+        } else {
+            alert('Error: ' + data.message);
+        }
+    })
+    .catch(error => {
+        console.error('Checkout error:', error);
+        alert('Failed to place order. Please try again.');
+    });
+}
+
+// Order History Functions
+function showOrderHistory() {
+    const modal = document.getElementById('orderHistoryModal');
+    if (modal) {
+        modal.style.display = 'block';
+        loadOrderHistory();
+    }
+}
+
+function loadOrderHistory() {
+    const orderHistoryList = document.getElementById('order-history-list');
+    if (!orderHistoryList) return;
+    
+    orderHistoryList.innerHTML = '<p class="loading">Loading your orders...</p>';
+    
+    fetch('order_handler.php', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/x-www-form-urlencoded',
+        },
+        body: 'action=get_user_orders'
+    })
+    .then(response => response.json())
+    .then(data => {
+        if (data.success) {
+            displayOrderHistory(data.orders);
+        } else {
+            orderHistoryList.innerHTML = '<p class="error">Failed to load orders: ' + data.message + '</p>';
+        }
+    })
+    .catch(error => {
+        console.error('Error loading orders:', error);
+        orderHistoryList.innerHTML = '<p class="error">Failed to load orders.</p>';
+    });
+}
+
+function displayOrderHistory(orders) {
+    const orderHistoryList = document.getElementById('order-history-list');
+    if (!orderHistoryList) return;
+    
+    if (orders.length === 0) {
+        orderHistoryList.innerHTML = '<p class="no-orders">You haven\'t placed any orders yet.</p>';
+        return;
+    }
+    
+    let ordersHTML = '';
+    orders.forEach(order => {
+        const date = new Date(order.created_at).toLocaleDateString();
+        const time = new Date(order.created_at).toLocaleTimeString();
+        
+        let itemsHTML = '';
+        order.items.forEach(item => {
+            itemsHTML += `<div class="order-item">${item.name} x${item.quantity}</div>`;
+        });
+        
+        const statusClass = getStatusClass(order.status);
+        
+        ordersHTML += `
+            <div class="order-card">
+                <div class="order-header">
+                    <span class="order-id">Order #${order.id}</span>
+                    <span class="order-status ${statusClass}">${order.status.toUpperCase()}</span>
+                </div>
+                <div class="order-date">${date} at ${time}</div>
+                <div class="order-items">${itemsHTML}</div>
+                <div class="order-total">Total: €${parseFloat(order.total_amount).toFixed(2)}</div>
+                <div class="order-payment">Payment: **** ${order.card_last_four} (${order.payment_method.replace('_', ' ')})</div>
+            </div>
+        `;
+    });
+    
+    orderHistoryList.innerHTML = ordersHTML;
+}
+
+function getStatusClass(status) {
+    switch(status) {
+        case 'pending': return 'status-pending';
+        case 'in_progress': return 'status-in-progress';
+        case 'completed': return 'status-completed';
+        case 'cancelled': return 'status-cancelled';
+        default: return '';
+    }
+}
+
+// Authentication Functions
 function checkLoginStatus() {
     fetch('authorization.php', {
         method: 'POST',
@@ -399,6 +633,8 @@ window.addEventListener('click', function(event) {
     const loginModal = document.getElementById('loginModal');
     const registerModal = document.getElementById('registerModal');
     const cartModal = document.getElementById('cartModal');
+    const checkoutModal = document.getElementById('checkoutModal');
+    const orderHistoryModal = document.getElementById('orderHistoryModal');
     
     if (event.target === loginModal) {
         closeModal('loginModal');
@@ -408,5 +644,11 @@ window.addEventListener('click', function(event) {
     }
     if (event.target === cartModal) {
         closeModal('cartModal');
+    }
+    if (event.target === checkoutModal) {
+        closeModal('checkoutModal');
+    }
+    if (event.target === orderHistoryModal) {
+        closeModal('orderHistoryModal');
     }
 });

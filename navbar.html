@@ -92,3 +92,56 @@
         </div>
     </div>
 </div>
+
+<!-- Checkout Modal -->
+<div id="checkoutModal" class="modal">
+    <div class="modal-content checkout-modal-content">
+        <span class="close" onclick="closeModal('checkoutModal')">&times;</span>
+        <h2>Checkout</h2>
+        <form id="checkoutForm">
+            <div class="checkout-section">
+                <h3>Contact Information</h3>
+                <input type="text" id="checkout-name" placeholder="Your Name" required>
+                <input type="tel" id="checkout-phone" placeholder="Phone Number (for courier contact)" required>
+            </div>
+            
+            <div class="checkout-section">
+                <h3>Payment Information</h3>
+                <select id="payment-method" required>
+                    <option value="">Select Payment Method</option>
+                    <option value="credit_card">Credit Card</option>
+                    <option value="debit_card">Debit Card</option>
+                </select>
+                <input type="text" id="card-number" placeholder="Card Number (16 digits)" maxlength="19" required>
+                <div class="card-details">
+                    <input type="text" id="card-expiry" placeholder="MM/YY" maxlength="5" required>
+                    <input type="text" id="card-cvv" placeholder="CVV" maxlength="3" required>
+                </div>
+            </div>
+            
+            <div class="checkout-section">
+                <h3>Order Summary</h3>
+                <div id="checkout-items" class="checkout-items-list"></div>
+                <div class="checkout-total">
+                    <strong>Total: €<span id="checkout-total">0.00</span></strong>
+                </div>
+            </div>
+            
+            <div class="checkout-actions">
+                <button type="button" onclick="closeModal('checkoutModal')" class="cancel-btn">Cancel</button>
+                <button type="submit" class="place-order-btn">Place Order</button>
+            </div>
+        </form>
+    </div>
+</div>
+
+<!-- Order History Modal -->
+<div id="orderHistoryModal" class="modal">
+    <div class="modal-content order-history-modal-content">
+        <span class="close" onclick="closeModal('orderHistoryModal')">&times;</span>
+        <h2>Your Order History</h2>
+        <div id="order-history-list" class="order-history-container">
+            <p class="loading">Loading your orders...</p>
+        </div>
+    </div>
+</div>
