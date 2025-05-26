@@ -1,5 +1,5 @@
 <?php
-require_once '../config/database.php';
+require_once 'database.php';
 
 header('Content-Type: application/json');
 
@@ -36,7 +36,6 @@ function handleRegister($db) {
     $password = $_POST['password'] ?? '';
     $confirm_password = $_POST['confirm_password'] ?? '';
 
-
     if (empty($username) || empty($email) || empty($password)) {
         echo json_encode(['success' => false, 'message' => 'All fields are required']);
         return;
@@ -58,7 +57,6 @@ function handleRegister($db) {
     }
 
     try {
- 
         $check_query = "SELECT id FROM users WHERE username = :username OR email = :email";
         $check_stmt = $db->prepare($check_query);
         $check_stmt->bindParam(':username', $username);
@@ -70,10 +68,8 @@ function handleRegister($db) {
             return;
         }
 
-        
         $hashed_password = password_hash($password, PASSWORD_DEFAULT);
 
-        
         $insert_query = "INSERT INTO users (username, email, password, role) VALUES (:username, :email, :password, 'customer')";
         $insert_stmt = $db->prepare($insert_query);
         $insert_stmt->bindParam(':username', $username);
