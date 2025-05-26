@@ -25,48 +25,46 @@
 <body>
     <div id="sidebar-nav"></div>
 
-    <div class="container py-5 bg-light">
+    <div class="container py-5"> <!-- Removed bg-light to remove white background -->
     <h2 class="text-center mb-5 fw-bold">Contact Us</h2>
 
     <div class="row justify-content-center">
-        <div class="col-12 col-lg-8">
-        <div class="bg-white p-4 shadow rounded">
-            <form id="contact-form">
-            <div class="mb-3">
-                <label for="name" class="form-label fw-semibold">Name</label>
-                <input type="text" class="form-control" id="name" name="name" placeholder="Enter your name" required>
+        <div class="col-12 col-lg-5">
+            <div class="bg-white p-2 shadow rounded"> <!-- Keep this as is -->
+                <form id="contact-form">
+                <div class="mb-2">
+                    <label for="name" class="form-label fw-semibold">Name</label>
+                    <input type="text" class="form-control form-control-sm" id="name" name="name" placeholder="Enter your name" required>
+                </div>
+                <div class="mb-2">
+                    <label for="email" class="form-label fw-semibold">Email</label>
+                    <input type="email" class="form-control form-control-sm" id="email" name="email" placeholder="Enter your email" required>
+                </div>
+                <div class="mb-2">
+                    <label for="message" class="form-label fw-semibold">Message</label>
+                    <textarea class="form-control form-control-sm" id="message" name="message" rows="4" placeholder="Enter your message" required></textarea>
+                </div>
+                <button class="btn btn-primary btn-sm w-100" type="submit">Submit</button>
+                <div id="form-feedback" class="mt-3 text-center" style="display: none;"></div>
+                </form>
             </div>
-            <div class="mb-3">
-                <label for="email" class="form-label fw-semibold">Email</label>
-                <input type="email" class="form-control" id="email" name="email" placeholder="Enter your email" required>
-            </div>
-            <div class="mb-3">
-                <label for="message" class="form-label fw-semibold">Message</label>
-                <textarea class="form-control" id="message" name="message" rows="6" placeholder="Enter your message" required></textarea>
-            </div>
-            <button class="btn btn-primary btn-lg w-100" type="submit">Submit</button>
-            <div id="form-feedback" class="mt-3 text-center" style="display: none;"></div>
-            </form>
-        </div>
         </div>
     </div>
 
-
     <div class="row mt-5">
         <div class="col-12">
-        <div class="bg-white p-4 shadow rounded text-center">
+        <div class="p-4 shadow rounded text-center"> <!-- Removed bg-white to remove white background -->
             <h4 class="fw-bold mb-4">Our Contact Information</h4>
             <p><strong>Email:</strong> <a href="mailto:kebab@store.lv">kebab@store.lv</a></p>
             <p><strong>Phone:</strong> <a href="tel:+37129111111">+371 29 111 111</a></p>
-            <p><strong>Address:</strong>  Valmiera, Latvia</p>
+            <p><strong>Address:</strong> Valmiera, Latvia</p>
         </div>
         </div>
     </div>  
-        </div>
+    </div>
 
     <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js" crossorigin="anonymous"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.min.js" crossorigin="anonymous"></script>
-
 
     <script>
     document.getElementById('contact-form').addEventListener('submit', function (e) {
