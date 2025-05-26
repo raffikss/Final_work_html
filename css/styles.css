@@ -244,13 +244,12 @@ button:hover {
 
 /* Footer */
 .footer {
-    background-color: #403b3b;
     color: #fff;
     padding: 30px 20px;
     text-align: center;
     margin-top: 40px;
     padding: 20px;
-    background: #ddd;
+    background: black;
     border-radius: 10px;
     text-align: center;
 }
@@ -272,7 +271,7 @@ button:hover {
 .footer a {
     margin: 0 8px;
     text-decoration: none;
-    color: #333;
+    color: #666;
     font-weight: bold;
 }
 
