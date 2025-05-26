@@ -4,20 +4,20 @@ An interactive and user-friendly web application for kebab stores.
 
 ---
 
-## 📌 1.1.1 Purpose and Objectives
+## 📌 1.1 Purpose and Objectives
 
 To create an intuitive and accessible application for kebab businesses and their customers.
 
 ---
 
-## 🎯 1.1.2 Target Audience
+## 🎯 1.2 Target Audience
 
 - Customers looking for an easy-to-use app to find their favorite kebab places.
 - Kebab shop owners who want a digital platform to grow their business.
 
 ---
 
-## ⚙️ 1.1.3 Features and Functionalities
+## ⚙️ 1.3 Features and Functionalities
 
 - ✨ Easy-to-navigate front end
 - 🧩 Backend with user-friendly interactions
@@ -26,7 +26,7 @@ To create an intuitive and accessible application for kebab businesses and their
 - 🔍 Organized structure for future scalability
 
 ---
-## ⚙️ 1.1.4 Pages 
+## ⚙️ 1.4 Pages 
 - LoginPage(Registration)
 - Home Page
 - Menu Page
@@ -34,9 +34,23 @@ To create an intuitive and accessible application for kebab businesses and their
 - Contact Page/About Page(Adress, Contact Information, About Kebab Place information)
 
 
-## 👥 1.1.5 Roles and Responsibilities
+## 👥 1.5 Roles and Responsibilities
 
-To be continued...
+Linda Brante
+Rafaels Dmitrijvs
+Ralfs Fridvalds
+
+
+## 1.6 TODO
+- contact page (Rafaels)
+- menu items from db (Ralfs)
+- CRUD (Ralfs)
+- purchase result page (Linda~)
+- Fix sidebar components (Linda~)
+- Make mobile compatable (Linda~)
+- Fix styles page (Linda~)
+- Write menu in db table (Linda)
+- 
 
 ---
 
