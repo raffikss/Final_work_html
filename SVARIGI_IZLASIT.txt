@@ -1,7 +1,7 @@
 database_setup.sql fails ir domats lai uzstaditu mysql serveri datus, so pirms kko testejat ieteiktu sava phpadmin palaist to scriptu, vai nu palaidiet failu vai iekopejat scriptu
 Ir uztaisiti 3 konti automatiski datubazes scripta, ar 3 dazadiem rolliem, jo ir plaans, ka viniem ir dazadi layout majaslapa(nav vel pievienota funkcionalitate)
-Parasts mirstigais klients username: user, email: user@gmail.com, parole: user
-Darbinieks: username: staff, email: staff@kebabplace.com,  parole: staff
-Admins: username: admin. email: admin@kebabplace.com, parole: admin
+Parasts mirstigais klients username: user, email: user@gmail.com, parole: password
+Darbinieks: username: staff, email: staff@kebabplace.com,  parole: password
+Admins: username: admin. email: admin@kebabplace.com, parole: password
 
 Pirms iesniegsanas delete this

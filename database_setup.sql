@@ -12,7 +12,7 @@ CREATE TABLE IF NOT EXISTS users (
     updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
 );
 
-INSERT IGNORE INTO users (username, email, password, role) VALUES 
-('admin', 'admin@kebabplace.com', 'admin', 'admin'),
-('user', 'user@gmail.com', 'user', 'customer'),
-('staff', 'staff@kebabplace.com', 'staff', 'staff');
+INSERT INTO users (username, email, password, role) VALUES 
+('admin', 'admin@kebabplace.com', '$2y$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi', 'admin'),
+('user', 'user@gmail.com', '$2y$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi', 'customer'),
+('staff', 'staff@kebabplace.com', '$2y$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi', 'staff');
