@@ -164,7 +164,7 @@
         let allOrders = [];
         
         // Load navbar
-        fetch('../navbar.html')
+        fetch('navbar.html')
             .then(response => response.text())
             .then(data => {
                 document.getElementById('side-navbar').innerHTML = data;
@@ -175,7 +175,7 @@
             });
         
         function verifyStaffAccess() {
-            fetch('../authorization.php', {
+            fetch('authorization.php', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/x-www-form-urlencoded',
@@ -186,14 +186,14 @@
             .then(data => {
                 if (!data.success || !data.logged_in || (data.user.role !== 'staff' && data.user.role !== 'admin')) {
                     alert('Access denied. Staff privileges required.');
-                    window.location.href = '../index.html';
+                    window.location.href = 'index.html';
                     return;
                 }
                 loadAllOrders();
             })
             .catch(error => {
                 console.error('Access verification error:', error);
-                window.location.href = '../index.html';
+                window.location.href = 'index.html';
             });
         }
         
@@ -201,7 +201,7 @@
             const ordersList = document.getElementById('orders-list');
             ordersList.innerHTML = '<div class="loading">Loading orders...</div>';
             
-            fetch('../orders.php', {
+            fetch('orders.php', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/x-www-form-urlencoded',
@@ -292,7 +292,7 @@
             const statusSelect = document.getElementById(`status-${orderId}`);
             const newStatus = statusSelect.value;
             
-            fetch('../orders.php', {
+            fetch('orders.php', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/x-www-form-urlencoded',
