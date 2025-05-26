@@ -3,10 +3,233 @@
         <button class="toggle-button">☰</button>
     </div>
     <h1>A kebab place</h1>
+    
+    <!-- User info section -->
+    <div id="user-section" class="user-section" style="display: none;">
+        <div class="user-info">
+            <span id="welcome-message">Welcome, User!</span>
+            <span id="user-role" class="user-role"></span>
+        </div>
+    </div>
+    
     <div class="button-group">
         <button onclick="location.href='index.html'" class="nav-btn">Home</button>
         <button onclick="location.href='about.html'" class="nav-btn">About</button>
         <button onclick="location.href='contact.html'" class="nav-btn">Contact</button>
         <button onclick="location.href='menu.html'" class="nav-btn">Menu</button>
+        
+        <!-- Admin section (hidden by default) -->
+        <div id="admin-section" style="display: none;">
+            <button onclick="location.href='admin/dashboard.html'" class="nav-btn admin-btn">Admin Dashboard</button>
+        </div>
+        
+        <!-- Authentication buttons -->
+        <div id="auth-section" class="auth-section">
+            <div id="logged-out-buttons">
+                <button onclick="showLoginModal()" class="nav-btn auth-btn">Login</button>
+                <button onclick="showRegisterModal()" class="nav-btn auth-btn">Register</button>
+            </div>
+            <div id="logged-in-buttons" style="display: none;">
+                <button onclick="logout()" class="nav-btn auth-btn">Logout</button>
+            </div>
+        </div>
     </div>
 </nav>
+
+<!-- Login Modal -->
+<div id="loginModal" class="modal">
+    <div class="modal-content">
+        <span class="close" onclick="closeModal('loginModal')">&times;</span>
+        <h2>Login</h2>
+        <form id="loginForm">
+            <input type="text" id="loginUsername" placeholder="Username or Email" required>
+            <input type="password" id="loginPassword" placeholder="Password" required>
+            <button type="submit" class="auth-submit-btn">Login</button>
+        </form>
+        <p class="modal-switch">Don't have an account? <a href="#" onclick="switchToRegister()">Register here</a></p>
+    </div>
+</div>
+
+<!-- Register Modal -->
+<div id="registerModal" class="modal">
+    <div class="modal-content">
+        <span class="close" onclick="closeModal('registerModal')">&times;</span>
+        <h2>Register</h2>
+        <form id="registerForm">
+            <input type="text" id="registerUsername" placeholder="Username" required>
+            <input type="email" id="registerEmail" placeholder="Email" required>
+            <input type="password" id="registerPassword" placeholder="Password" required>
+            <input type="password" id="registerConfirmPassword" placeholder="Confirm Password" required>
+            <button type="submit" class="auth-submit-btn">Register</button>
+        </form>
+        <p class="modal-switch">Already have an account? <a href="#" onclick="switchToLogin()">Login here</a></p>
+    </div>
+</div>
+
+<script>
+// Authentication JavaScript
+document.addEventListener('DOMContentLoaded', function() {
+    checkLoginStatus();
+    setupAuthForms();
+});
+
+function checkLoginStatus() {
+    fetch('auth/auth.php', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/x-www-form-urlencoded',
+        },
+        body: 'action=check_session'
+    })
+    .then(response => response.json())
+    .then(data => {
+        if (data.success && data.logged_in) {
+            updateUIForLoggedInUser(data.user);
+        } else {
+            updateUIForLoggedOutUser();
+        }
+    })
+    .catch(error => {
+        console.error('Error checking login status:', error);
+        updateUIForLoggedOutUser();
+    });
+}
+
+function updateUIForLoggedInUser(user) {
+    document.getElementById('user-section').style.display = 'block';
+    document.getElementById('welcome-message').textContent = `Welcome, ${user.username}!`;
+    document.getElementById('user-role').textContent = user.role.toUpperCase();
+    
+    document.getElementById('logged-out-buttons').style.display = 'none';
+    document.getElementById('logged-in-buttons').style.display = 'block';
+    
+    // Show admin section if user is admin
+    if (user.role === 'admin') {
+        document.getElementById('admin-section').style.display = 'block';
+    }
+}
+
+function updateUIForLoggedOutUser() {
+    document.getElementById('user-section').style.display = 'none';
+    document.getElementById('logged-out-buttons').style.display = 'block';
+    document.getElementById('logged-in-buttons').style.display = 'none';
+    document.getElementById('admin-section').style.display = 'none';
+}
+
+function showLoginModal() {
+    document.getElementById('loginModal').style.display = 'block';
+}
+
+function showRegisterModal() {
+    document.getElementById('registerModal').style.display = 'block';
+}
+
+function closeModal(modalId) {
+    document.getElementById(modalId).style.display = 'none';
+}
+
+function switchToRegister() {
+    closeModal('loginModal');
+    showRegisterModal();
+}
+
+function switchToLogin() {
+    closeModal('registerModal');
+    showLoginModal();
+}
+
+function setupAuthForms() {
+    // Login form
+    document.getElementById('loginForm').addEventListener('submit', function(e) {
+        e.preventDefault();
+        
+        const username = document.getElementById('loginUsername').value;
+        const password = document.getElementById('loginPassword').value;
+        
+        fetch('auth/auth.php', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/x-www-form-urlencoded',
+            },
+            body: `action=login&username=${encodeURIComponent(username)}&password=${encodeURIComponent(password)}`
+        })
+        .then(response => response.json())
+        .then(data => {
+            if (data.success) {
+                alert(data.message);
+                closeModal('loginModal');
+                updateUIForLoggedInUser(data.user);
+            } else {
+                alert('Error: ' + data.message);
+            }
+        })
+        .catch(error => {
+            console.error('Login error:', error);
+            alert('Login failed. Please try again.');
+        });
+    });
+    
+    // Register form
+    document.getElementById('registerForm').addEventListener('submit', function(e) {
+        e.preventDefault();
+        
+        const username = document.getElementById('registerUsername').value;
+        const email = document.getElementById('registerEmail').value;
+        const password = document.getElementById('registerPassword').value;
+        const confirmPassword = document.getElementById('registerConfirmPassword').value;
+        
+        fetch('auth/auth.php', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/x-www-form-urlencoded',
+            },
+            body: `action=register&username=${encodeURIComponent(username)}&email=${encodeURIComponent(email)}&password=${encodeURIComponent(password)}&confirm_password=${encodeURIComponent(confirmPassword)}`
+        })
+        .then(response => response.json())
+        .then(data => {
+            alert(data.message);
+            if (data.success) {
+                closeModal('registerModal');
+                document.getElementById('registerForm').reset();
+            }
+        })
+        .catch(error => {
+            console.error('Registration error:', error);
+            alert('Registration failed. Please try again.');
+        });
+    });
+}
+
+function logout() {
+    fetch('auth/auth.php', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/x-www-form-urlencoded',
+        },
+        body: 'action=logout'
+    })
+    .then(response => response.json())
+    .then(data => {
+        if (data.success) {
+            alert(data.message);
+            updateUIForLoggedOutUser();
+        }
+    })
+    .catch(error => {
+        console.error('Logout error:', error);
+    });
+}
+
+// Close modals when clicking outside
+window.onclick = function(event) {
+    const loginModal = document.getElementById('loginModal');
+    const registerModal = document.getElementById('registerModal');
+    
+    if (event.target === loginModal) {
+        closeModal('loginModal');
+    }
+    if (event.target === registerModal) {
+        closeModal('registerModal');
+    }
+}
+</script>
