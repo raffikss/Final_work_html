@@ -135,13 +135,16 @@ export class CheckoutManager {
                 CartManager.clearCart();
                 ModalManager.closeModal('checkoutModal');
                 document.getElementById('checkoutForm').reset();
+                window.location.href = window.location.href.split("/")[0] + "payment_result_good.html"
             } else {
                 alert('Error: ' + data.message);
+                window.location.href = window.location.href.split("/")[0] + "payment_result_bad.html"
             }
         })
         .catch(error => {
             console.error('Checkout error:', error);
             alert('Failed to place order. Please try again.');
+            window.location.href = window.location.href.split("/")[0] + "payment_result_bad.html"
         });
     }
 }
