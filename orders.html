@@ -1,0 +1,339 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Staff - Order Management</title>
+    <link rel="stylesheet" href="../css/styles.css">
+    <style>
+        .orders-container {
+            margin-left: 270px;
+            padding: 20px;
+        }
+        
+        .order-card {
+            background: white;
+            border-radius: 8px;
+            padding: 20px;
+            margin-bottom: 15px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+        
+        .order-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 10px;
+        }
+        
+        .order-id {
+            font-weight: bold;
+            font-size: 1.1em;
+            color: #333;
+        }
+        
+        .order-status {
+            padding: 5px 12px;
+            border-radius: 20px;
+            font-size: 0.9em;
+            font-weight: bold;
+            text-transform: uppercase;
+        }
+        
+        .status-pending { background-color: #fff3cd; color: #856404; }
+        .status-in-progress { background-color: #d1ecf1; color: #0c5460; }
+        .status-completed { background-color: #d4edda; color: #155724; }
+        .status-cancelled { background-color: #f8d7da; color: #721c24; }
+        
+        .order-info {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 15px;
+            margin-bottom: 15px;
+        }
+        
+        .order-details h4 {
+            margin-bottom: 5px;
+            color: #666;
+            font-size: 0.9em;
+        }
+        
+        .order-items {
+            background-color: #f8f9fa;
+            padding: 10px;
+            border-radius: 5px;
+            margin-bottom: 15px;
+        }
+        
+        .order-item {
+            padding: 3px 0;
+            border-bottom: 1px solid #eee;
+        }
+        
+        .order-item:last-child {
+            border-bottom: none;
+        }
+        
+        .status-controls {
+            display: flex;
+            gap: 10px;
+            align-items: center;
+        }
+        
+        .status-select {
+            padding: 8px 12px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            background-color: white;
+        }
+        
+        .update-btn {
+            padding: 8px 16px;
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+        
+        .update-btn:hover {
+            background-color: #45a049;
+        }
+        
+        .loading {
+            text-align: center;
+            padding: 50px;
+            color: #666;
+        }
+        
+        .no-orders {
+            text-align: center;
+            padding: 50px;
+            color: #999;
+        }
+        
+        .filter-section {
+            background: white;
+            padding: 15px;
+            border-radius: 8px;
+            margin-bottom: 20px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+        }
+        
+        .filter-controls {
+            display: flex;
+            gap: 15px;
+            align-items: center;
+        }
+        
+        .filter-select {
+            padding: 8px 12px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+        }
+    </style>
+</head>
+<body>
+    <div id="side-navbar"></div>
+    
+    <div class="orders-container">
+        <h1>Order Management</h1>
+        
+        <div class="filter-section">
+            <div class="filter-controls">
+                <label for="status-filter">Filter by Status:</label>
+                <select id="status-filter" class="filter-select" onchange="filterOrders()">
+                    <option value="">All Orders</option>
+                    <option value="pending">Pending</option>
+                    <option value="in_progress">In Progress</option>
+                    <option value="completed">Completed</option>
+                    <option value="cancelled">Cancelled</option>
+                </select>
+                
+                <button onclick="loadAllOrders()" class="update-btn">Refresh</button>
+            </div>
+        </div>
+        
+        <div id="orders-list">
+            <div class="loading">Loading orders...</div>
+        </div>
+    </div>
+
+    <script src="../js/script.js"></script>
+    <script>
+        let allOrders = [];
+        
+        // Load navbar
+        fetch('../navbar.html')
+            .then(response => response.text())
+            .then(data => {
+                document.getElementById('side-navbar').innerHTML = data;
+                setTimeout(() => {
+                    checkLoginStatus();
+                    verifyStaffAccess();
+                }, 100);
+            });
+        
+        function verifyStaffAccess() {
+            fetch('../authorization.php', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/x-www-form-urlencoded',
+                },
+                body: 'action=check_session'
+            })
+            .then(response => response.json())
+            .then(data => {
+                if (!data.success || !data.logged_in || (data.user.role !== 'staff' && data.user.role !== 'admin')) {
+                    alert('Access denied. Staff privileges required.');
+                    window.location.href = '../index.html';
+                    return;
+                }
+                loadAllOrders();
+            })
+            .catch(error => {
+                console.error('Access verification error:', error);
+                window.location.href = '../index.html';
+            });
+        }
+        
+        function loadAllOrders() {
+            const ordersList = document.getElementById('orders-list');
+            ordersList.innerHTML = '<div class="loading">Loading orders...</div>';
+            
+            fetch('../orders.php', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/x-www-form-urlencoded',
+                },
+                body: 'action=get_all_orders'
+            })
+            .then(response => response.json())
+            .then(data => {
+                if (data.success) {
+                    allOrders = data.orders;
+                    displayOrders(allOrders);
+                } else {
+                    ordersList.innerHTML = '<div class="no-orders">Failed to load orders: ' + data.message + '</div>';
+                }
+            })
+            .catch(error => {
+                console.error('Error loading orders:', error);
+                ordersList.innerHTML = '<div class="no-orders">Failed to load orders.</div>';
+            });
+        }
+        
+        function displayOrders(orders) {
+            const ordersList = document.getElementById('orders-list');
+            
+            if (orders.length === 0) {
+                ordersList.innerHTML = '<div class="no-orders">No orders found.</div>';
+                return;
+            }
+            
+            let ordersHTML = '';
+            orders.forEach(order => {
+                const date = new Date(order.created_at).toLocaleDateString();
+                const time = new Date(order.created_at).toLocaleTimeString();
+                
+                let itemsHTML = '';
+                order.items.forEach(item => {
+                    itemsHTML += `<div class="order-item">${item.name} x${item.quantity} - €${(item.price * item.quantity).toFixed(2)}</div>`;
+                });
+                
+                const statusClass = getStatusClass(order.status);
+                
+                ordersHTML += `
+                    <div class="order-card">
+                        <div class="order-header">
+                            <span class="order-id">Order #${order.id}</span>
+                            <span class="order-status ${statusClass}">${order.status.replace('_', ' ')}</span>
+                        </div>
+                        
+                        <div class="order-info">
+                            <div class="order-details">
+                                <h4>Customer Information</h4>
+                                <div><strong>Name:</strong> ${order.customer_name}</div>
+                                <div><strong>Phone:</strong> ${order.guest_phone}</div>
+                                <div><strong>Order Date:</strong> ${date} at ${time}</div>
+                            </div>
+                            
+                            <div class="order-details">
+                                <h4>Payment Information</h4>
+                                <div><strong>Method:</strong> ${order.payment_method.replace('_', ' ')}</div>
+                                <div><strong>Card:</strong> **** ${order.card_last_four}</div>
+                                <div><strong>Total:</strong> €${parseFloat(order.total_amount).toFixed(2)}</div>
+                            </div>
+                        </div>
+                        
+                        <div class="order-items">
+                            <h4>Order Items:</h4>
+                            ${itemsHTML}
+                        </div>
+                        
+                        <div class="status-controls">
+                            <label>Update Status:</label>
+                            <select class="status-select" id="status-${order.id}">
+                                <option value="pending" ${order.status === 'pending' ? 'selected' : ''}>Pending</option>
+                                <option value="in_progress" ${order.status === 'in_progress' ? 'selected' : ''}>In Progress</option>
+                                <option value="completed" ${order.status === 'completed' ? 'selected' : ''}>Completed</option>
+                                <option value="cancelled" ${order.status === 'cancelled' ? 'selected' : ''}>Cancelled</option>
+                            </select>
+                            <button class="update-btn" onclick="updateOrderStatus(${order.id})">Update</button>
+                        </div>
+                    </div>
+                `;
+            });
+            
+            ordersList.innerHTML = ordersHTML;
+        }
+        
+        function updateOrderStatus(orderId) {
+            const statusSelect = document.getElementById(`status-${orderId}`);
+            const newStatus = statusSelect.value;
+            
+            fetch('../orders.php', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/x-www-form-urlencoded',
+                },
+                body: `action=update_order_status&order_id=${orderId}&status=${newStatus}`
+            })
+            .then(response => response.json())
+            .then(data => {
+                if (data.success) {
+                    alert('Order status updated successfully!');
+                    loadAllOrders();
+                } else {
+                    alert('Failed to update order status: ' + data.message);
+                }
+            })
+            .catch(error => {
+                console.error('Error updating order status:', error);
+                alert('Failed to update order status.');
+            });
+        }
+        
+        function filterOrders() {
+            const filterValue = document.getElementById('status-filter').value;
+            
+            if (filterValue === '') {
+                displayOrders(allOrders);
+            } else {
+                const filteredOrders = allOrders.filter(order => order.status === filterValue);
+                displayOrders(filteredOrders);
+            }
+        }
+        
+        function getStatusClass(status) {
+            switch(status) {
+                case 'pending': return 'status-pending';
+                case 'in_progress': return 'status-in-progress';
+                case 'completed': return 'status-completed';
+                case 'cancelled': return 'status-cancelled';
+                default: return '';
+            }
+        }
+    </script>
+</body>
+</html>

@@ -485,16 +485,26 @@ function updateUIForLoggedInUser(user) {
     const loggedOutButtons = document.getElementById('logged-out-buttons');
     const loggedInButtons = document.getElementById('logged-in-buttons');
     const adminSection = document.getElementById('admin-section');
-    
+    const staffSection = document.getElementById('staff-section');
+    const orderHistoryBtn = document.getElementById('order-history-btn');
+
     if (userSection) userSection.style.display = 'block';
     if (welcomeMessage) welcomeMessage.textContent = `Welcome, ${user.username}!`;
     if (userRole) userRole.textContent = user.role.toUpperCase();
-    
+
     if (loggedOutButtons) loggedOutButtons.style.display = 'none';
     if (loggedInButtons) loggedInButtons.style.display = 'block';
-    
+
     if (user.role === 'admin' && adminSection) {
         adminSection.style.display = 'block';
+    }
+
+    if (user.role === 'staff' && staffSection) {
+        staffSection.style.display = 'block';
+    }
+
+    if (orderHistoryBtn && (user.role === 'customer' || user.role === 'staff')) {
+        orderHistoryBtn.style.display = 'inline-block';
     }
 }
 
@@ -503,13 +513,16 @@ function updateUIForLoggedOutUser() {
     const loggedOutButtons = document.getElementById('logged-out-buttons');
     const loggedInButtons = document.getElementById('logged-in-buttons');
     const adminSection = document.getElementById('admin-section');
-    
+    const staffSection = document.getElementById('staff-section');
+    const orderHistoryBtn = document.getElementById('order-history-btn');
+
     if (userSection) userSection.style.display = 'none';
     if (loggedOutButtons) loggedOutButtons.style.display = 'block';
     if (loggedInButtons) loggedInButtons.style.display = 'none';
     if (adminSection) adminSection.style.display = 'none';
+    if (staffSection) staffSection.style.display = 'none';
+    if (orderHistoryBtn) orderHistoryBtn.style.display = 'none';
 }
-
 function showLoginModal() {
     const modal = document.getElementById('loginModal');
     if (modal) {
