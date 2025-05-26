@@ -31,3 +31,21 @@ CREATE TABLE IF NOT EXISTS orders (
     updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
     FOREIGN KEY (user_id) REFERENCES users(id) ON DELETE SET NULL
 );
+
+CREATE TABLE `menu` (
+    `id` text NOT NULL,
+    `name` text NOT NULL,
+    `description` text NOT NULL,
+    `price` float NOT NULL,
+    `food_type` text NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+INSERT INTO `menu` (`id`, `name`, `description`, `price`, `food_type`) VALUES
+('chicken-wrap', 'Chicken Kebab Wrap', 'Strips of delicious cooked chicken wrapped in a lightly toasted tortilla wrap with lettuce, mayo and salsa.', 6.5, 'wraps'),
+('lamb-wrap', 'Lamb Kebab Wrap', 'The grilled lamb is then wrapped in a soft, warm pita bread and garnished with various vegetables and condiments, such as lettuce, tomatoes, onions, and a flavorful yogurt sauce.', 7, 'wraps'),
+('falafel-wrap', 'Falafel Wrap', 'Crispy chickpea patties wrapped in warm pita with fresh veggies and our signature sauce. A delicious vegetarian favorite!', 6, 'wraps'),
+('chicken-plate', 'Chicken Plate', ' Tender grilled chicken served with, fresh salad, and our special sauce.', 9, 'plates'),
+('mix-grill', 'Mix Grill Plate', ' A hearty combo of grilled chicken, beef, and lamb served with your choice of three delicious sauces. A flavorful feast for meat lovers!', 12, 'plates'),
+('veggie-plate', 'Veggie Plate', ' A colorful mix of grilled seasonal vegetables served with your choice of sauce.', 10, 'plates'),
+('soda', 'Soda 0.5 L', 'Cola / Fanta / Sprite', 1.5, 'drinks'),
+('water', 'Water 0.3 L', 'Mineral Water', 1, 'drinks');
