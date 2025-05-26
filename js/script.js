@@ -350,7 +350,7 @@ function handleCheckoutSubmit() {
         formData.append(key, orderData[key]);
     });
     
-    fetch('order_handler.php', {
+    fetch('orders.php', {
         method: 'POST',
         body: formData
     })
@@ -386,7 +386,7 @@ function loadOrderHistory() {
     
     orderHistoryList.innerHTML = '<p class="loading">Loading your orders...</p>';
     
-    fetch('order_handler.php', {
+    fetch('orders.php', {
         method: 'POST',
         headers: {
             'Content-Type': 'application/x-www-form-urlencoded',
