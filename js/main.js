@@ -1,10 +1,10 @@
 
-import { toggleNav } from './js/navigation.js';
-import { AuthManager } from './js/auth.js';
-import { CartManager } from './js/cart.js';
-import { CheckoutManager } from './js/checkout.js';
-import { OrderHistoryManager } from './js/orderHistory.js';
-import { ModalManager } from './js/modals.js';
+import { toggleNav } from './navigation.js';
+import { AuthManager } from './auth.js';
+import { CartManager } from './cart.js';
+import { CheckoutManager } from './checkout.js';
+import { OrderHistoryManager } from './orderHistory.js';
+import { ModalManager } from './modals.js';
 
 // Make functions globally available for HTML onclick handlers
 window.toggleNav = toggleNav;
