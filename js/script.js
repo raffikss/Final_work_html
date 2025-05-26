@@ -386,12 +386,31 @@ function loadOrderHistory() {
     
     orderHistoryList.innerHTML = '<p class="loading">Loading your orders...</p>';
     
-    fetch('orders.php', {
+    // Check if user is staff to determine which endpoint to call
+    fetch('authorization.php', {
         method: 'POST',
         headers: {
             'Content-Type': 'application/x-www-form-urlencoded',
         },
-        body: 'action=get_user_orders'
+        body: 'action=check_session'
+    })
+    .then(response => response.json())
+    .then(sessionData => {
+        if (!sessionData.success || !sessionData.logged_in) {
+            orderHistoryList.innerHTML = '<p class="error">Please log in to view orders.</p>';
+            return;
+        }
+        
+        // Determine which action to use based on user role
+        const action = sessionData.user.role === 'staff' ? 'get_all_orders' : 'get_user_orders';
+        
+        return fetch('orders.php', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/x-www-form-urlencoded',
+            },
+            body: `action=${action}`
+        });
     })
     .then(response => response.json())
     .then(data => {
@@ -412,7 +431,7 @@ function displayOrderHistory(orders) {
     if (!orderHistoryList) return;
     
     if (orders.length === 0) {
-        orderHistoryList.innerHTML = '<p class="no-orders">You haven\'t placed any orders yet.</p>';
+        orderHistoryList.innerHTML = '<p class="no-orders">No orders found.</p>';
         return;
     }
     
@@ -428,12 +447,17 @@ function displayOrderHistory(orders) {
         
         const statusClass = getStatusClass(order.status);
         
+        // Show customer info for staff, hide for regular customers
+        const customerInfo = order.customer_name ? 
+            `<div class="order-customer">Customer: ${order.customer_name} | Phone: ${order.guest_phone}</div>` : '';
+        
         ordersHTML += `
             <div class="order-card">
                 <div class="order-header">
                     <span class="order-id">Order #${order.id}</span>
                     <span class="order-status ${statusClass}">${order.status.toUpperCase()}</span>
                 </div>
+                ${customerInfo}
                 <div class="order-date">${date} at ${time}</div>
                 <div class="order-items">${itemsHTML}</div>
                 <div class="order-total">Total: €${parseFloat(order.total_amount).toFixed(2)}</div>
@@ -499,7 +523,7 @@ function updateUIForLoggedInUser(user) {
         adminSection.style.display = 'block';
     }
 
-    if (user.role === 'staff' && staffSection) {
+    if ((user.role === 'staff' || user.role === 'admin') && staffSection) {
         staffSection.style.display = 'block';
     }
 
