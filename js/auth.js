@@ -49,7 +49,7 @@ export class AuthManager {
             }
         }
 
-        // Only show staff section for staff and admin users
+        
         if (staffSection) {
             if (user.role === 'staff' || user.role === 'admin') {
                 staffSection.style.display = 'block';
@@ -58,7 +58,7 @@ export class AuthManager {
             }
         }
 
-        // Show order history for all logged-in users
+        
         if (orderHistoryBtn) {
             orderHistoryBtn.style.display = 'inline-block';
         }
