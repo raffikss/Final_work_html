@@ -48,3 +48,50 @@ export const menuItems = [
         price: 1.00
     }
 ];
+
+async function loadMenu() {
+    try {
+        const container = document.getElementById("menu-container");
+        container.innerHTML = '';
+
+        const response = await fetch('get_menu.php');
+        const data = await response.json();
+
+        this.menuItems = data;
+
+        data.forEach(item => {
+            const card = `
+                <div class="col-md-4">
+                    <div class="card h-auto">
+                        <img
+                            src="images/${item.id}.jpg"
+                            class="w-75 h-75 d-block mx-auto pt-3 object-fit-cover"
+                            alt="${item.name}"
+                        />
+                        <div class="card-body">
+                            <h5 class="card-title">${item.name}</h5>
+                            <p class="card-text">${item.description}</p>
+                            <p
+                                onclick="addToCart('${item.id}')"
+                                class="fw-bold text-center text-danger price-box border border-danger rounded">
+                                ${parseFloat(item.price).toFixed(2)} € <i class="fa fa-shopping-cart text-black"></i>
+                            </p>
+                        </div>
+                    </div>
+                </div>`;
+            container.insertAdjacentHTML("beforeend", card);
+        });
+    } catch (error) {
+        console.log("Err in menu data:");
+        console.log(error);
+    }
+}
+
+function addToCart(itemId) {
+    alert(`${itemId} added to cart!`);
+}
+
+if (window.location.pathname.split('/').pop() == "menu") {
+    // load menu cards only in menu page
+    loadMenu()
+}
