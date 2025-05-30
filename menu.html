@@ -65,71 +65,14 @@
     </section>
 
     <script>
-        const menuItems = [
-            wraps = [
-                {
-                    id: "chicken-wrap",
-                    name: "Chicken Kebab Wrap",
-                    description: "Strips of delicious cooked chicken wrapped in a lightly toasted tortilla wrap with lettuce, mayo and salsa.",
-                    price: "6.50"
-                },
+        async function loadMenu() {
+            const response = await fetch('get_menu.php');
+            const data = await response.json();
 
-                {
-                    id: "lamb-wrap",
-                    name: "Lamb Kebab Wrap",
-                    description: " The grilled lamb is then wrapped in a soft, warm pita bread and garnished with various vegetables and condiments, such as lettuce, tomatoes, onions, and a flavorful yogurt sauce.",
-                    price: "7.00"
-                },
+            const container = document.getElementById("menu-container");
+            container.innerHTML = ''; // Clear existing items
 
-                {
-                    id: "falafel-wrap",
-                    name: "Falafel Wrap",
-                    description: " Crispy chickpea patties wrapped in warm pita with fresh veggies and our signature sauce. A delicious vegetarian favorite!",
-                    price: "6.00"
-                },
-            ],
-            plates = [
-                {
-                    id: "chicken-plate",
-                    name: "Chicken Plate",
-                    description: " Tender grilled chicken served with, fresh salad, and our special sauce.",
-                    price: "9.00"
-                }, 
-
-                {
-                    id: "mix-grill",
-                    name: "Mix Grill Plate",
-                    description: " A hearty combo of grilled chicken, beef, and lamb served with your choice of three delicious sauces. A flavorful feast for meat lovers!",
-                    price: "12.00"
-                },
-
-                {
-                    id: "veggie-plate",
-                    name: "Veggie Plate",
-                    description: "  A colorful mix of grilled seasonal vegetables served with your choice of sauce.",
-                    price: "10.00"
-                },   
-            ],
-            drinks = [
-                {
-                    id: "soda",
-                    name: "Soda 0.5 L",
-                    description: " Cola / Fanta / Sprite",
-                    price: "1.50"
-                }, 
-
-                {
-                    id: "water",
-                    name: "Water 0.3 L",
-                    description: "Mineral Water",
-                    price: "1.00"
-                }, 
-            ]
-        ];
-        const container = document.getElementById("menu-container");
-
-        menuItems.forEach(category => {
-            category.forEach(item => {
+            data.forEach(item => {
                 const card = `
                     <div class="col-md-4">
                         <div class="card h-100">
@@ -139,25 +82,25 @@
                                 alt="${item.name}"
                             />
                             <div class="card-body">
-                            <h5 class="card-title">${item.name}</h5>
-                            <p class="card-text">${item.description}</p>
-                            <p
-                                onclick="addToCart('${item.id}')"
-                                class="fw-bold text-center text-danger price-box">
-                                ${item.price} € <i class="fa fa-shopping-cart text-black"></i>
-                            </p>
-
+                                <h5 class="card-title">${item.name}</h5>
+                                <p class="card-text">${item.description}</p>
+                                <p
+                                    onclick="addToCart('${item.id}')"
+                                    class="fw-bold text-center text-danger price-box">
+                                    ${item.price.toFixed(2)} € <i class="fa fa-shopping-cart text-black"></i>
+                                </p>
                             </div>
                         </div>
                     </div>`;
                 container.insertAdjacentHTML("beforeend", card);
             });
-        });
-
+        }
 
         function addToCart(itemId) {
             alert(`${itemId} added to cart!`);
         }
+
+        loadMenu(); // Load menu on page load
     </script>
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
