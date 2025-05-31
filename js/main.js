@@ -22,6 +22,11 @@ window.switchToRegister = () => AuthManager.switchToRegister();
 window.switchToLogin = () => AuthManager.switchToLogin();
 window.logout = () => AuthManager.logout();
 
+function do_alert(msg) {
+    alert(msg);
+}
+window.do_alert = do_alert;
+
 // Initialize application
 document.addEventListener('DOMContentLoaded', function() {
     setTimeout(() => {
