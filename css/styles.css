@@ -836,4 +836,15 @@ cart-notification {
     .nav-container.collapsed .toggle-button {
         display: block;
     }
+    .orders-container {
+        margin-left: 5px;
+        padding-right: 20px;
+        font-size: 0.7em;
+    }
+
+    .filter-controls {
+        flex-direction: column;
+        align-items: stretch;
+    }
+
 }
