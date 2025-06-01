@@ -6,6 +6,7 @@ import { CheckoutManager } from './checkout.js';
 import { OrderHistoryManager } from './orderHistory.js';
 import { ModalManager } from './modals.js';
 
+
 // Make functions globally available for HTML onclick handlers
 window.toggleNav = toggleNav;
 window.addToCart = (itemId) => CartManager.addToCart(itemId);
