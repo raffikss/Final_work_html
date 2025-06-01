@@ -126,7 +126,6 @@ export class CartManager {
                 const price = parseFloat(item.price) || 0;
                 return sum + (price * item.quantity);
             }, 0);
-            console.log('Invalid price value:', item.price, 'Type:', typeof item.price);
             cartTotal.textContent = total.toFixed(2);
         }
     }
@@ -157,7 +156,7 @@ export class CartManager {
         let total = 0;
         
         this.cart.forEach(item => {
-           try{
+           try {
             const price = parseFloat(item.price) || 0;
             const itemTotal = price * item.quantity;
             total += itemTotal;
@@ -166,7 +165,6 @@ export class CartManager {
                 <div class="cart-item">
                     <div class="cart-item-info">
                         <h4>${this.escapeHtml(item.name)}</h4>
-                        console.log('Invalid price value:', item.price, 'Type:', typeof item.price);
                         <p class="cart-item-price">€${price.toFixed(2)} each</p>
                     </div>
                     <div class="cart-item-controls">
@@ -175,17 +173,15 @@ export class CartManager {
                         <button class="quantity-btn" onclick="updateQuantity('${item.id}', ${item.quantity + 1})">+</button>
                         <button class="remove-btn" onclick="removeFromCart('${item.id}')">Remove</button>
                     </div>
-                    console.log('Invalid price value:', item.price, 'Type:', typeof item.price);
                     <div class="cart-item-total">€${itemTotal.toFixed(2)}</div>
                 </div>
             `;
-           } catch (err){
+           } catch (err) {
             console.error('Cart item render error:', item, err);
            }
         });
         
         cartItems.innerHTML = cartHTML;
-        console.log('Invalid price value:', item.price, 'Type:', typeof item.price);
         if (cartTotal) cartTotal.textContent = total.toFixed(2);
     }
 
@@ -221,4 +217,3 @@ export class CartManager {
         this.updateCartModal();
     }
 }
-
