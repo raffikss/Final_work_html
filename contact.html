@@ -8,9 +8,22 @@
     <link rel="stylesheet" href="css/styles.css" />
     <script type="module" src="js/main.js"></script>
     <script type="module" src="js/navbar.js"></script>
+    <script>
+    fetch('navbar.html')
+        .then(response => response.text())
+        .then(data => {
+            document.getElementById('side-navbar').innerHTML = data;
+            const currentPage = window.location.pathname.split('/').pop();
+            document.querySelectorAll('.nav-btn').forEach(button => {
+                if (button.getAttribute('onclick')?.includes(currentPage)) {
+                    button.classList.add('hidden-button');
+                }
+            });
+        });
+</script>
 </head>
 <body>
-    <div id="sidebar-nav"></div>
+    <div id="side-navbar"></div>
 
     <div class="container py-5">
     <h2 class="text-center mb-5 fw-bold">Contact Us</h2>
