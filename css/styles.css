@@ -847,7 +847,43 @@ cart-notification {
         align-items: stretch;
     }
 
+    .nav-container.collapsed .user-info {
+        display: none;
+    }
+    .bg-warning {
+        width: 100%;
+        margin-left: 0rem; 
+        padding-left: 30px; 
+        padding-right: 50px;
+    }
+
+    .admin-header h1 {
+        font-size: 1.5rem;
+    }
+    .admin-header p.lead {
+        font-size: 0.9rem;
+    }
+
+    .admin-card {
+        margin: 0.5rem;
+    }
+    .btn {
+        padding: 0.6rem 1rem;
+        font-size: 0.9rem;
+    }
+
+    .nav-tabs .nav-link {
+        font-size: 0.9rem;
+        padding: 0.5rem 0.75rem;
+    }
+
+    .card-header .d-flex {
+        flex-direction: column;
+        align-items: stretch;
+    }
+
 }
+
 
 /* ORDERS */
 .orders-container {
