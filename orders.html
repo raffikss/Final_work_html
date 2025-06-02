@@ -132,6 +132,7 @@
             border-radius: 5px;
         }
     </style>
+    <script type="module" src="js/main.js"></script>
 </head>
 <body>
     <div id="side-navbar"></div>
@@ -158,8 +159,6 @@
             <div class="loading">Loading orders...</div>
         </div>
     </div>
-
-    <script type="module" src="js/main.js"></script>
     <script>
         let allOrders = [];
         
@@ -169,12 +168,12 @@
             .then(data => {
                 document.getElementById('side-navbar').innerHTML = data;
                 setTimeout(() => {
-                    checkLoginStatus();
                     verifyStaffAccess();
                 }, 100);
             });
         
         function verifyStaffAccess() {
+            console.log("STAFF?")
             fetch('authorization.php', {
                 method: 'POST',
                 headers: {
