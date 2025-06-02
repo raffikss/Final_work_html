@@ -727,3 +727,124 @@ cart-notification {
 .error {
     color: #dc3545;
 }
+
+
+@media (max-width: 900px) {
+    body {
+        margin: 10px;
+        padding: 10px;
+        padding-left: 80px;
+    }
+
+    .nav-container.collapsed {
+        width: 70px;
+    }
+
+    .content {
+        margin-left: 50px;
+        padding: 20px 10px;
+        transition: margin-left 0.3s ease;
+    }
+
+    .nav-container {
+        width: 80%;
+        max-width: 200px;
+        min-width: 0;
+        
+    }
+
+.toggle-button {
+    margin-left: 0; 
+    position: relative; 
+    left: -10px; 
+
+}
+
+    .toggle-button {
+        display: block;
+        padding-right: 15px;
+    }
+
+    .button-group {
+        flex-direction: column;
+        gap: 8px;
+        padding: 10px;
+    }
+
+    .button-group button {
+        font-size: 0.9rem;
+        padding: 8px;
+        text-align: center;
+    }
+
+    .cart-section, .auth-section, .user-section {
+        padding: 10px;
+    }
+
+    .cart-total-display {
+        font-size: 0.8rem;
+    }
+
+    .modal-content {
+        width: 90%;
+        max-width: 100%;
+        margin: 15% auto;
+        padding: 15px;
+        max-height: 80vh;
+        overflow-y: auto;
+    }
+
+    .modal-content input, .modal-content select {
+        padding: 8px;
+    }
+
+    .auth-submit-btn, .checkout-btn, .clear-cart-btn, .place-order-btn, .cancel-btn {
+        padding: 10px;
+    }
+
+    .container-services {
+        margin-left: 0;
+        padding: 20px 10px;
+    }
+
+    .services-grid {
+        flex-direction: column;
+        gap: 10px;
+    }
+
+    .service-column {
+        min-width: 100%;
+    }
+
+    .footer {
+        padding: 15px 10px;
+        font-size: 0.9rem;
+    }
+
+    .footer button {
+        font-size: 0.9rem;
+        padding: 8px 15px;
+    }
+
+    .nav-container.collapsed h1,
+    .nav-container.collapsed .user-section,
+    .nav-container.collapsed .button-group,
+    .nav-container.collapsed .auth-section {
+        display: none;
+    }
+
+    .nav-container.collapsed .toggle-button {
+        display: block;
+    }
+    .orders-container {
+        margin-left: 5px;
+        padding-right: 20px;
+        font-size: 0.7em;
+    }
+
+    .filter-controls {
+        flex-direction: column;
+        align-items: stretch;
+    }
+
+}
