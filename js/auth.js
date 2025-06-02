@@ -161,6 +161,12 @@ export class AuthManager {
                 alert(data.message);
                 this.updateUIForLoggedOutUser();
             }
+            try {
+                clearCart();
+            } catch (error) {
+                console.log("Failed to clear cart:");
+                console.log(error);
+            }
         })
         .catch(error => {
             console.error('Logout error:', error);
