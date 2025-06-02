@@ -133,6 +133,7 @@
         }
     </style>
     <script type="module" src="js/main.js"></script>
+    <script type="module" src="js/navbar.js"></script>
 </head>
 <body>
     <div id="side-navbar"></div>
@@ -161,19 +162,8 @@
     </div>
     <script>
         let allOrders = [];
-        
-        // Load navbar
-        fetch('navbar.html')
-            .then(response => response.text())
-            .then(data => {
-                document.getElementById('side-navbar').innerHTML = data;
-                setTimeout(() => {
-                    verifyStaffAccess();
-                }, 100);
-            });
-        
+        verifyStaffAccess();
         function verifyStaffAccess() {
-            console.log("STAFF?")
             fetch('authorization.php', {
                 method: 'POST',
                 headers: {
