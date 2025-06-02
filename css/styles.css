@@ -862,7 +862,6 @@ cart-notification {
         padding-right: 50px;
     }
 
-  /* Header adjustments */
     .admin-header h1 {
         font-size: 1.5rem;
     }
@@ -888,17 +887,13 @@ cart-notification {
         align-items: stretch;
     }
 
-
     .orders-container {
         width: 100%;
         margin-left: 4px !important; 
         padding-left: 0 !important; 
         padding-right: 0 !important;
         box-sizing: border-box; 
-
-
-}
-
+    }
 }
 
 
