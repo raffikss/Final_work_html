@@ -735,6 +735,11 @@ cart-notification {
         padding: 10px;
         padding-left: 80px;
     }
+    .nav-container{
+        position: fixed;
+        height:100%;
+        z-index: 1000;
+    }
 
     .nav-container.collapsed {
         width: 70px;
@@ -753,12 +758,12 @@ cart-notification {
         
     }
 
-    .toggle-button {
-        margin-left: 0; 
-        position: relative; 
-        left: -10px; 
+.toggle-button {
+    margin-left: 0; 
+    position: relative; 
+    left: -10px; 
 
-    }
+}
 
     .toggle-button {
         display: block;
@@ -857,6 +862,7 @@ cart-notification {
         padding-right: 50px;
     }
 
+  /* Header adjustments */
     .admin-header h1 {
         font-size: 1.5rem;
     }
@@ -881,6 +887,17 @@ cart-notification {
         flex-direction: column;
         align-items: stretch;
     }
+
+
+    .orders-container {
+        width: 100%;
+        margin-left: 4px !important; 
+        padding-left: 0 !important; 
+        padding-right: 0 !important;
+        box-sizing: border-box; 
+
+
+}
 
 }
 
